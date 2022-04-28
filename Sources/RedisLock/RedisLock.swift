@@ -8,17 +8,12 @@
 import Foundation
 import RediStack
 
-public struct RedisLock {
+public struct RedisLock: Codable {
     let key: RedisKey
     let id: UUID
     
-    public init(key: String) {
-        self.key = .init(key)
-        self.id = UUID()
-    }
-
-    public init(key: RedisKey) {
+    public init(key: RedisKey, id: UUID? = nil) {
         self.key = key
-        self.id = UUID()
+        self.id = id ?? UUID()
     }
 }
