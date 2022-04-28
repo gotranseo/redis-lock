@@ -1,28 +1,33 @@
-// swift-tools-version: 5.6
+// swift-tools-version:5.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
-    name: "RedisLock",
+    name: "redis-lock",
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "RedisLock",
             targets: ["RedisLock"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://gitlab.com/mordil/RediStack.git", from: "1.3.0"),
+        .package(url: "https://github.com/apple/swift-nio.git", from: "2.0.0"),
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "RedisLock",
-            dependencies: []),
+            dependencies: [
+                .product(name: "NIOCore", package: "swift-nio"),
+                "RediStack",
+            ]
+        ),
         .testTarget(
             name: "RedisLockTests",
-            dependencies: ["RedisLock"]),
+            dependencies: [
+                "RedisLock",
+                .product(name: "NIOCore", package: "swift-nio"),
+                .product(name: "NIOPosix", package: "swift-nio"),
+            ]),
     ]
 )
