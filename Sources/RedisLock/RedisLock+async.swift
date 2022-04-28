@@ -51,6 +51,11 @@ public extension RedisLock {
     func verifyOwnership(on redis: RedisClient) async throws -> Bool {
         try await verifyOwnership(on: redis).get()
     }
+
+    /// Verify the lock is owned by this instance and throw if it isn't
+    func ensureOwnership(on redis: RedisClient) async throws {
+        guard try await verifyOwnership(on: redis).get() else { throw Error.notTheOwner(key) }
+    }
 }
 
 @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
