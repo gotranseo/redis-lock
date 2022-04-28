@@ -24,23 +24,30 @@ public extension RedisLock {
         try await lock(expirySeconds: expirySeconds, on: redis).get()
     }
 
+    /// Checks if a lock is active for the key
+    func isLocked(on redis: RedisClient) async throws -> Bool {
+        try await isLocked(on: redis).get()
+    }
+
     /// Removes the lock, returning true if successful
     @discardableResult
     func unlock(on redis: RedisClient) async throws -> Bool {
         try await unlock(on: redis).get()
     }
 
+    /// Updates an existing lock with a new expiry
     @discardableResult
     func touch(expirySeconds: Int, on redis: RedisClient) async throws -> Bool {
         try await touch(expirySeconds: expirySeconds, on: redis).get()
     }
     
+    /// Removes any expiry on an active lock
     @discardableResult
     func persist(on redis: RedisClient) async throws -> Bool {
         try await persist(on: redis).get()
     }
     
-    /// Check to see if the lock is owned by this instance
+    /// Check to see if the lock is owned by this instance, this also returns false if there is no active lock
     func verifyOwnership(on redis: RedisClient) async throws -> Bool {
         try await verifyOwnership(on: redis).get()
     }
@@ -48,6 +55,7 @@ public extension RedisLock {
 
 @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
 public extension RedisLock {
+    /// Run commands within a lock. Throws an error if the lock is not aquired.
     func lock(expirySeconds: Int? = nil, on redis: RedisClient, perform: (RedisLock) async throws -> Void) async throws {
         var performError: Swift.Error? = nil
         try await self.ensureLock(expirySeconds: expirySeconds, on: redis)

@@ -25,10 +25,13 @@ final class RedisLockTests: XCTestCase {
     
     func testAquireLock() throws {
         let redisLock = RedisLock(key: "lock")
+        try XCTAssertFalse(redisLock.isLocked(on: redis).wait())
         try XCTAssertFalse(redisLock.verifyOwnership(on: redis).wait())
         try XCTAssertTrue(redisLock.lock(on: redis).wait())
+        try XCTAssertTrue(redisLock.isLocked(on: redis).wait())
         try XCTAssertTrue(redisLock.verifyOwnership(on: redis).wait())
         try XCTAssertTrue(redisLock.unlock(on: redis).wait())
+        try XCTAssertFalse(redisLock.isLocked(on: redis).wait())
         try XCTAssertFalse(redisLock.verifyOwnership(on: redis).wait())
         try XCTAssertTrue(redisLock.unlock(on: redis).wait())
     }
