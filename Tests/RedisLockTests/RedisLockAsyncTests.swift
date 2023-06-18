@@ -17,10 +17,10 @@ final class RedisLockAsyncTests: XCTestCase {
     
     override func setUp() async throws {
         loop = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-        redis = try RedisConnection.make(
-            configuration: try .init(hostname: "127.0.0.1"),
+        redis = try await RedisConnection.make(
+            configuration: try .init(hostname: ProcessInfo.processInfo.environment["REDIS_HOSTNAME"] ?? "localhost", port: ProcessInfo.processInfo.environment["REDIS_PORT"].flatMap(Int.init(_:)) ?? 6379),
             boundEventLoop: loop.next()
-        ).wait()
+        ).get()
     }
     
     func testScopedLock() async throws {
