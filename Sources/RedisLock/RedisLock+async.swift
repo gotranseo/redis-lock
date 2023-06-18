@@ -8,9 +8,6 @@
 import NIOCore
 import RediStack
 
-#if compiler(>=5.5) && canImport(_Concurrency)
-
-@available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
 public extension RedisLock {
     /// Attempts to lock the key and throws if unable to
     func ensureLock(expirySeconds: Int? = nil, on redis: RedisClient) async throws {
@@ -58,7 +55,6 @@ public extension RedisLock {
     }
 }
 
-@available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
 public extension RedisLock {
     /// Run commands within a lock. Throws an error if the lock is not aquired.
     func lock(expirySeconds: Int? = nil, on redis: RedisClient, perform: (RedisLock) async throws -> Void) async throws {
@@ -76,5 +72,3 @@ public extension RedisLock {
         }
     }
 }
-
-#endif

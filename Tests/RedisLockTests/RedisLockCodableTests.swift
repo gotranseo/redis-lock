@@ -23,7 +23,6 @@ final class RedisLockCodableTests: XCTestCase {
         ).wait()
     }
     
-    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
     func testCodableLock() async throws {
         let redisLock = RedisLock(key: "lock")
         let _ = try await redisLock.lock(on: redis)

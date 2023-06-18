@@ -2,7 +2,7 @@
 
 This is an implementation of a single instance Redis Lock as described in  [Distributed Locks with Redis](https://redis.io/docs/reference/patterns/distributed-locks/).
 
-* Uses a [RediStack](https://github.com/Mordil/RediStack) client which sits on SwiftNIO
+* Uses a [RediStack](https://github.com/swift-server-community/RediStack) client which sits on SwiftNIO
 * Supports Swift async calls
 
 ## Example
@@ -31,7 +31,7 @@ To install **RedisLock**, just add it to **Package.swift** in the top level depe
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/monagle-au/RedisLock.git", from: "1.0.0")
+    .package(url: "https://github.com/gotranseo/RedisLock.git", from: "1.0.0")
 ]
 ```
 
