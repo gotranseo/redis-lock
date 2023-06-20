@@ -17,8 +17,8 @@ let package = Package(
             targets: ["RedisLock"]),
     ],
     dependencies: [
-        .package(url: "https://gitlab.com/swift-server-community/RediStack.git", from: "1.3.0"),
-        .package(url: "https://github.com/apple/swift-nio.git", from: "2.0.0"),
+        .package(url: "https://github.com/swift-server/RediStack.git", from: "1.4.0"),
+        .package(url: "https://github.com/apple/swift-nio.git", from: "2.54.0"),
     ],
     targets: [
         .target(
